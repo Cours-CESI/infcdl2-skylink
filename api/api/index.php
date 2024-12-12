@@ -4,6 +4,10 @@
 spl_autoload_register(function ($class) {
     include __DIR__ . '/classes/' . $class . '.php';
 });
+
+include __DIR__ . '/function.php';
+include __DIR__ . '/db.php';
+
 // Récupération de l'URI
 $uri = trim($_SERVER['REQUEST_URI'], '/');
 $segments = explode('/', $uri);
