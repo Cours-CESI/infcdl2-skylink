@@ -1,12 +1,15 @@
 <?php
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
 
 // Autoload des classes
 spl_autoload_register(function ($class) {
     include __DIR__ . '/classes/' . $class . '.php';
 });
 
-include __DIR__ . '/function.php';
-include __DIR__ . '/db.php';
+require __DIR__ . '/function.php';
+require __DIR__ . '/db.php';
 
 // Récupération de l'URI
 $uri = trim($_SERVER['REQUEST_URI'], '/');
