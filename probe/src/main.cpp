@@ -5,8 +5,10 @@
 #include <LiquidCrystal_I2C.h>
 #include <ESP8266WiFi.h>
 
-const char *ssid = "SSID";
-const char *password = "PASSWORD";
+const char *ssid = "";
+const char *password = "";
+
+bool useWiFi = true;
 
 Adafruit_BME280 bme;
 LiquidCrystal_I2C lcd(0x27, 16, 2);
@@ -48,6 +50,8 @@ std::tuple<float, float, float> readBME280Data()
 
 void initWiFi()
 {
+  if (!useWiFi)
+    return;
   WiFi.begin(ssid, password);
   Serial.print("Connexion au Wi-Fi");
 
@@ -59,6 +63,17 @@ void initWiFi()
   }
   Serial.println("\nConnecté au Wi-Fi");
   Serial.println(WiFi.localIP());
+}
+
+void managedDisconnectedWiFi()
+{
+  if (!useWiFi)
+    return;
+  if (WiFi.status() != WL_CONNECTED)
+  {
+    Serial.println("Déconnexion détectée !");
+    initWiFi();
+  }
 }
 
 void initLCD()
@@ -97,6 +112,8 @@ void setup()
 
 void loop()
 {
+  managedDisconnectedWiFi();
+
   delay(1000);
   auto [temperature, humidity, pressure] = readBME280Data();
 
