@@ -4,6 +4,7 @@
 #include <Adafruit_BME280.h>
 #include <LiquidCrystal_I2C.h>
 #include <ESP8266WiFi.h>
+#include <ESP8266HTTPClient.h>
 
 const char *ssid = "";
 const char *password = "";
@@ -86,6 +87,48 @@ void initLCD()
   lcd.print("Bloc 2");
 }
 
+void postReport(float temperature, float humidity, float pressure)
+{
+  if (WiFi.status() != WL_CONNECTED)
+  {
+    Serial.println("Erreur : Wi-Fi non connecté !");
+    return;
+  }
+
+  WiFiClient client;
+  HTTPClient http;
+
+  const char *serverUrl = "http://jsonplaceholder.typicode.com/posts";
+  http.begin(client, serverUrl);
+
+  http.addHeader("Content-Type", "application/json");
+
+  String jsonPayload = "{\"ip\":\"" + WiFi.localIP().toString() +
+                       "\",\"temperature\":" + String(temperature, 2) +
+                       ",\"humidity\":" + String(humidity, 2) +
+                       ",\"pressure\":" + String(pressure, 2) + "}";
+
+  Serial.println("Envoi des données : ");
+  Serial.println(jsonPayload);
+
+  int httpCode = http.POST(jsonPayload);
+
+  if (httpCode > 0)
+  {
+    Serial.printf("Code HTTP : %d\n", httpCode);
+    String payload = http.getString();
+    Serial.println("Réponse du serveur : ");
+    Serial.println(payload);
+  }
+  else
+  {
+    Serial.printf("Erreur lors de la requête POST : %s\n",
+                  http.errorToString(httpCode).c_str());
+  }
+
+  http.end();
+}
+
 void setup()
 {
   Serial.begin(9600);
@@ -112,22 +155,13 @@ void setup()
 
 void loop()
 {
+  delay(5000);
+
   managedDisconnectedWiFi();
 
-  delay(1000);
   auto [temperature, humidity, pressure] = readBME280Data();
 
-  Serial.print("Température : ");
-  Serial.print(temperature);
-  Serial.println(" °C");
-
-  Serial.print("Humidité : ");
-  Serial.print(humidity);
-  Serial.println(" %");
-
-  Serial.print("Pression : ");
-  Serial.print(pressure);
-  Serial.println(" hPa");
+  postReport(temperature, humidity, pressure);
 
   lcd.clear();
   lcd.setCursor(0, 0);
