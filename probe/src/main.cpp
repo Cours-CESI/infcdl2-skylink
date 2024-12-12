@@ -5,15 +5,8 @@
 
 Adafruit_BME280 bme;
 
-void setup()
+void scanI2CDevices()
 {
-  Serial.begin(9600);
-  while (!Serial)
-    ; // Wait serail port
-
-  Wire.begin(0, 2); // GPIO0 = SDA, GPIO2 = SCL
-
-  delay(1000);
   Serial.println("\nScan I2C en cours...");
 
   int foundDevices = 0;
@@ -37,13 +30,30 @@ void setup()
     Serial.print("Nombre total de périphériques détectés : ");
     Serial.println(foundDevices);
   }
+}
 
-  unsigned status;
-  status = bme.begin(0x76);
+std::tuple<float, float, float> readBME280Data()
+{
+  float temperature = bme.readTemperature();
+  float humidity = bme.readHumidity();
+  float pressure = bme.readPressure() / 100.0F; // hPa conversion
+  return std::make_tuple(temperature, humidity, pressure);
+}
 
-  if (!status)
+void setup()
+{
+  Serial.begin(9600);
+  while (!Serial)
+    ;
+  Wire.begin(0, 2); // GPIO0 = SDA, GPIO2 = SCL
+
+  delay(1000);
+  scanI2CDevices();
+
+  Serial.println("Initialisation du capteur BME280...");
+  if (!bme.begin(0x76))
   {
-    Serial.println("Could not find a valid BME280 sensor, check wiring!");
+    Serial.println("Erreur : BME280 introuvable. Vérifiez le câblage !");
     while (1)
       ;
   }
@@ -52,5 +62,17 @@ void setup()
 void loop()
 {
   delay(1000);
-  Serial.println(bme.readTemperature());
+  auto [temperature, humidity, pressure] = readBME280Data();
+
+  Serial.print("Température : ");
+  Serial.print(temperature);
+  Serial.println(" °C");
+
+  Serial.print("Humidité : ");
+  Serial.print(humidity);
+  Serial.println(" %");
+
+  Serial.print("Pression : ");
+  Serial.print(pressure);
+  Serial.println(" hPa");
 }
