@@ -1,10 +1,15 @@
 <?php
-class Weather {
-    public function GET() {
+
+namespace api\classes;
+class Weather
+{
+    public function GET()
+    {
         echo json_encode(['message' => 'Sonde API Page']);
     }
 
-    public function POST() {
+    public function POST()
+    {
         $path = getCleanedPath();
         switch ($path) {
             case 'weather/create':
@@ -17,12 +22,12 @@ class Weather {
                     echo json_encode(['error' => $e->getMessage()]);
                 }
                 break;
-            
+
             default:
                 echo json_encode(['message' => 'This is a POST request to Test class']);
                 break;
         }
 
-        
+
     }
 }
