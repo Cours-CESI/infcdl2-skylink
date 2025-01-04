@@ -1,34 +1,33 @@
 import "./App.css";
+import Loader from "./components/Loader.tsx";
 import Navbar from "./components/Navbar.tsx";
-import {StatChart} from "./components/charts/StatChart.tsx";
+import { StatChart } from "./components/charts/StatChart.tsx";
+import { useGetData } from "./hooks/useGetData.ts";
 
 function App() {
+  const { data, isLoading, isError } = useGetData(
+    "http://localhost:3000/probes"
+  );
+
+  let content;
+
+  if (isLoading || isError) content = <Loader isError={isError} />;
+  else
+    content = data?.map((probe) => (
+      <StatChart key={probe.name} name={probe.name} data={probe.data} />
+    ));
 
   return (
-      <>
-        <div className={"w-screen h-screen"}>
-          <Navbar/>
-          <div className={"h-screen w-screen"}>
-            <div className={"grid 2xl:grid-cols-2 grid-cols-1 h-full"}>
-              <div className={"flex justify-center items-center w-full h-full"}>
-                <StatChart/>
-              </div>
-              <div className={"flex justify-center items-center w-full h-full"}>
-                <StatChart/>
-              </div>
-              <div className={"flex justify-center items-center w-full h-full"}>
-                <StatChart/>
-              </div>
-              <div className={"flex justify-center items-center w-full h-full"}>
-                <StatChart/>
-              </div>
-              <div className={"flex justify-center items-center w-full h-full"}>
-                <StatChart/>
-              </div>
-            </div>
+    <>
+      <div className={"w-screen h-screen"}>
+        <Navbar />
+        <div className={"h-screen w-screen"}>
+          <div className={"grid 2xl:grid-cols-2 grid-cols-1 h-full"}>
+            {content}
           </div>
         </div>
-      </>
+      </div>
+    </>
   );
 }
 
