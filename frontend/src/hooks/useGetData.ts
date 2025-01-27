@@ -1,5 +1,6 @@
 import useSWR from "swr";
 import { IStatChartProps } from "../components/charts/StatChart";
+import {API_URL} from "../config";
 
 type RawData = {
   sonde_name: string;
@@ -12,8 +13,8 @@ type RawData = {
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-export const useGetData = (apiUrl: string) => {
-  const { data, error } = useSWR<RawData>(apiUrl, fetcher, { refreshInterval: 5000, revalidateOnFocus: false });
+export const useGetData = () => {
+  const { data, error } = useSWR<RawData>(`${API_URL}/weather/create`, fetcher, { refreshInterval: 5000, revalidateOnFocus: false });
   error;
 
   const transformedData: IStatChartProps[] | undefined = data
