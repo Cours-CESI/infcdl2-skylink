@@ -14,8 +14,7 @@ type RawData = {
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export const useGetData = () => {
-  const { data, error } = useSWR<RawData>(`${API_URL}/weather/create`, fetcher, { refreshInterval: 5000, revalidateOnFocus: false });
-  error;
+  const { data, error } = useSWR<RawData>(`${API_URL}/sondes`, fetcher, { refreshInterval: 5000, revalidateOnFocus: false });
 
   const transformedData: IStatChartProps[] | undefined = data
     ? data.reduce<IStatChartProps[]>((acc, item) => {
