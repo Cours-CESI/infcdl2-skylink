@@ -1,5 +1,5 @@
 {
-  "probes": [
+  "sondes": [
     {
       "sonde_name": "Probe A",
       "created_at": 1675305600000,
@@ -24,16 +24,16 @@
     {
       "sonde_name": "Probe A",
       "created_at": 1675316400000,
-      "temperature": 22.0,
+      "temperature": 22,
       "humidity": 54,
-      "pressure": 1013.0
+      "pressure": 1013
     },
     {
       "sonde_name": "Probe B",
       "created_at": 1675305600000,
       "temperature": 20.3,
       "humidity": 60,
-      "pressure": 1014.0
+      "pressure": 1014
     },
     {
       "sonde_name": "Probe B",
@@ -52,7 +52,7 @@
     {
       "sonde_name": "Probe B",
       "created_at": 1675316400000,
-      "temperature": 20.0,
+      "temperature": 20,
       "humidity": 59,
       "pressure": 1014.1
     },
@@ -73,16 +73,51 @@
     {
       "sonde_name": "Probe C",
       "created_at": 1675312800000,
-      "temperature": 26.0,
+      "temperature": 26,
       "humidity": 46,
       "pressure": 1012.5
     },
     {
       "sonde_name": "Probe C",
       "created_at": 1675316400000,
-      "temperature": 25.0,
+      "temperature": 25,
       "humidity": 47,
       "pressure": 1012.8
+    },
+    {
+      "id": "fce8",
+      "name": "test",
+      "ip": "129.2119.111.11"
+    },
+    {
+      "id": "63a9",
+      "name": "sqdsqd",
+      "ip": "qdqsd"
+    },
+    {
+      "id": "c512",
+      "name": "sqqd",
+      "ip": "dqdsdsq"
+    },
+    {
+      "id": "3809",
+      "name": "sqdsqdd",
+      "ip": "sqdqds"
+    },
+    {
+      "id": "70e7",
+      "name": "sqdqd",
+      "ip": "dsqds"
+    },
+    {
+      "id": "0e86",
+      "name": "sqqdssqd",
+      "ip": "sqqds"
+    },
+    {
+      "id": "28e4",
+      "name": "fdfsfd",
+      "ip": "sfdsf"
     }
   ]
 }
