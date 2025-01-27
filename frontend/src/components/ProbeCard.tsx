@@ -1,8 +1,12 @@
 import {Probe} from "../types";
 
-const ProbeCard = ({id, ip, name}: Probe) => {
+interface IProbeCardProps extends Probe {
+  onEditRequest: () => void;
+}
+
+const ProbeCard = ({id, ip, name, onEditRequest}: IProbeCardProps) => {
   return (
-      <div className={"lg:w-[480px] lg:h-[120px] min-w-80 min-h-10 border-gray-50 bg-slate-600 rounded-md mt-8"}>
+      <div className={"lg:w-[480px] lg:h-[120px] min-w-80 min-h-10 border-gray-50 bg-slate-600 rounded-md mt-8 cursor-pointer hover:drop-shadow-md"} onClick={onEditRequest}>
         <div className={"w-full h-full flex flex-row"}>
           <div className={"h-full w-[140px] flex items-center"}>
             <img src={"/probe.svg"} className={"p-2 lg:w-24 min-w-10"}/>
