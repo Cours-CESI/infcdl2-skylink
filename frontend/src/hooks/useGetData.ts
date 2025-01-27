@@ -3,7 +3,7 @@ import { IStatChartProps } from "../components/charts/StatChart";
 
 type RawData = {
   sonde_name: string;
-  timestamp: number;
+  created_at: number;
   temperature: number;
   humidity: number;
   pressure: number;
@@ -21,7 +21,7 @@ export const useGetData = (apiUrl: string) => {
         const existingProbe: IStatChartProps | undefined = acc.find((probe) => probe.name === item.sonde_name);
 
         const dataPoint = {
-          timestamp: item.timestamp,
+          timestamp: item.created_at,
           temperature: item.temperature,
           humidity: item.humidity,
           pressure: item.pressure,
