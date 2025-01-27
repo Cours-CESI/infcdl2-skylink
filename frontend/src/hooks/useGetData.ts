@@ -2,7 +2,7 @@ import useSWR from "swr";
 import { IStatChartProps } from "../components/charts/StatChart";
 
 type RawData = {
-  name: string;
+  sonde_name: string;
   timestamp: number;
   temperature: number;
   humidity: number;
@@ -18,7 +18,7 @@ export const useGetData = (apiUrl: string) => {
 
   const transformedData: IStatChartProps[] | undefined = data
     ? data.reduce<IStatChartProps[]>((acc, item) => {
-        const existingProbe: IStatChartProps | undefined = acc.find((probe) => probe.name === item.name);
+        const existingProbe: IStatChartProps | undefined = acc.find((probe) => probe.name === item.sonde_name);
 
         const dataPoint = {
           timestamp: item.timestamp,
@@ -30,7 +30,7 @@ export const useGetData = (apiUrl: string) => {
         if (existingProbe) {
           existingProbe.data.push(dataPoint);
         } else {
-          acc.push({ name: item.name, data: [dataPoint] });
+          acc.push({ name: item.sonde_name, data: [dataPoint] });
         }
         return acc;
       }, [])
