@@ -1,0 +1,88 @@
+{
+  "probes": [
+    {
+      "sonde_name": "Probe A",
+      "created_at": 1675305600000,
+      "temperature": 22.5,
+      "humidity": 55,
+      "pressure": 1013.25
+    },
+    {
+      "sonde_name": "Probe A",
+      "created_at": 1675309200000,
+      "temperature": 23.1,
+      "humidity": 53,
+      "pressure": 1012.8
+    },
+    {
+      "sonde_name": "Probe A",
+      "created_at": 1675312800000,
+      "temperature": 21.8,
+      "humidity": 56,
+      "pressure": 1013.1
+    },
+    {
+      "sonde_name": "Probe A",
+      "created_at": 1675316400000,
+      "temperature": 22.0,
+      "humidity": 54,
+      "pressure": 1013.0
+    },
+    {
+      "sonde_name": "Probe B",
+      "created_at": 1675305600000,
+      "temperature": 20.3,
+      "humidity": 60,
+      "pressure": 1014.0
+    },
+    {
+      "sonde_name": "Probe B",
+      "created_at": 1675309200000,
+      "temperature": 21.2,
+      "humidity": 58,
+      "pressure": 1013.8
+    },
+    {
+      "sonde_name": "Probe B",
+      "created_at": 1675312800000,
+      "temperature": 19.7,
+      "humidity": 62,
+      "pressure": 1014.2
+    },
+    {
+      "sonde_name": "Probe B",
+      "created_at": 1675316400000,
+      "temperature": 20.0,
+      "humidity": 59,
+      "pressure": 1014.1
+    },
+    {
+      "sonde_name": "Probe C",
+      "created_at": 1675305600000,
+      "temperature": 25.5,
+      "humidity": 48,
+      "pressure": 1012.9
+    },
+    {
+      "sonde_name": "Probe C",
+      "created_at": 1675309200000,
+      "temperature": 24.8,
+      "humidity": 50,
+      "pressure": 1012.7
+    },
+    {
+      "sonde_name": "Probe C",
+      "created_at": 1675312800000,
+      "temperature": 26.0,
+      "humidity": 46,
+      "pressure": 1012.5
+    },
+    {
+      "sonde_name": "Probe C",
+      "created_at": 1675316400000,
+      "temperature": 25.0,
+      "humidity": 47,
+      "pressure": 1012.8
+    }
+  ]
+}
