@@ -6,7 +6,7 @@ class Weather
     {
         $pdo = getDatabaseConnection();
 
-        $weathersStatement = $pdo->prepare('SELECT s.name AS sonde_name, wr.temperature, wr.humidity, wr.pressure, wr.created_at FROM weather_reports AS wr LEFT JOIN sondes AS s ON wr.id_sonde = s.id');
+        $weathersStatement = $pdo->prepare('SELECT s.name AS sonde_name, wr.temperature, wr.humidity, wr.pressure, wr.created_at FROM weather_reports AS wr LEFT JOIN sondes AS s ON wr.id_sonde = s.id LIMIT 200');
         $weathersStatement->execute();
         $weathers = $weathersStatement->fetchAll(PDO::FETCH_ASSOC);
 
