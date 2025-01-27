@@ -2,6 +2,7 @@
 ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
+header('Access-Control-Allow-Origin: *');
 
 // Autoload des classes
 spl_autoload_register(function ($class) {
@@ -31,6 +32,5 @@ if (class_exists($className)) {
         echo json_encode(['error' => 'Method Not Allowed']);
     }
 } else {
-    http_response_code(404); // Classe introuvable
-    echo json_encode(['error' => 'Not Found: Class ' . $className]);
+    require __DIR__ . '/dashboard/index.html';
 }
