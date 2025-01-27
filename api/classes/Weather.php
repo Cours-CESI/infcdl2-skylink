@@ -1,30 +1,33 @@
 <?php
 
-namespace api\classes;
 class Weather
 {
-    public function GET()
+    public function get()
     {
-        echo json_encode(['message' => 'Sonde API Page']);
+        $pdo = getDatabaseConnection();
+
+        $weathersStatement = $pdo->prepare('SELECT s.name AS sonde_name, wr.temperature, wr.humidity, wr.pressure, wr.created_at FROM weather_reports AS wr LEFT JOIN sondes AS s ON wr.id_sonde = s.id');
+        $weathersStatement->execute();
+        $weathers = $weathersStatement->fetchAll(PDO::FETCH_ASSOC);
+
+        echo json_encode($weathers);
     }
 
-    public function POST()
+    public function post()
     {
+        $data = json_decode(file_get_contents("php://input"), true);
         $path = getCleanedPath();
         switch ($path) {
-            case 'weather/create':
+            case 'create':
 
                 try {
                     $pdo = getDatabaseConnection();
-                    $sql = "INSERT INTO weather_reports (probe_id, temperature, humidity, pressure) VALUES ('" . "(SELECT id FROM probe WHERE ip = '" . $_POST['ip'] . "' LIMIT 1)" . "', '" . $_POST['temperature'] . "', '" . $_POST['humidity'] . "', '" . $_POST['pressure'] . "')";
+                    $sql = "INSERT INTO weather_reports (id_sonde, temperature, humidity, pressure) VALUES (" . "(SELECT id FROM sondes WHERE ip = '" . $data['ip'] . "' LIMIT 1)" . ", '" . $data['temperature'] . "', '" . $data['humidity'] . "', '" . $data['pressure'] . "')";
                     $pdo->exec($sql);
+                    echo(json_encode(array('success' => true)));
                 } catch (PDOException $e) {
                     echo json_encode(['error' => $e->getMessage()]);
                 }
-                break;
-
-            default:
-                echo json_encode(['message' => 'This is a POST request to Test class']);
                 break;
         }
 

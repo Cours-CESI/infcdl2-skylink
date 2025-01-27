@@ -1,5 +1,9 @@
+# Activer le moteur de réécriture
 RewriteEngine On
-# Redirige toutes les requêtes vers index.php, sauf pour les fichiers existants
+
+# Assurez-vous que l'URL demandée n'est pas un fichier ou un dossier existant
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ index.php [L,QSA]
+
+# Rediriger toutes les autres requêtes vers index.php
+RewriteRule ^ index.php [QSA,L]

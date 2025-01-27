@@ -1,30 +1,31 @@
 <?php
 
-namespace api\classes;
 class Sondes
 {
-    public function GET()
+    public function get()
     {
-        dump('test');
-        echo json_encode(['message' => 'Sonde API Page']);
+        $pdo = getDatabaseConnection();
+
+        $sondeStatement = $pdo->prepare('SELECT * FROM sondes');
+        $sondeStatement->execute();
+        $sondes = $sondeStatement->fetchAll(PDO::FETCH_ASSOC);
+
+        echo json_encode($sondes);
     }
 
-    public function POST()
+    public function post()
     {
+        $data = json_decode(file_get_contents("php://input"), true);
         $path = getCleanedPath();
         switch ($path) {
-            case 'sondes/create':
+            case 'create':
                 try {
                     $pdo = getDatabaseConnection();
-                    $sql = "INSERT INTO probe (localisation, ip, name) VALUES ('" . $_POST['location'] . "', '" . $_POST['ip'] . "', '" . $_POST['name'] . "')";
+                    $sql = "INSERT INTO sondes (ip, name) VALUES ('" . $data['ip'] . "', '" . $data['name'] . "')";
                     $pdo->exec($sql);
                 } catch (PDOException $e) {
                     echo json_encode(['error' => $e->getMessage()]);
                 }
-                break;
-
-            default:
-                echo json_encode(['message' => 'This is a POST request to Test class']);
                 break;
         }
 
